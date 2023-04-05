@@ -32,5 +32,5 @@
 | Publisher | REG_SZ (文字列値) | TakumiTech
 | URLInfoAbout | REG_SZ (文字列値) | https://github.com/TakumiTech/homeworkChecker-v2 |
 | DisplayVersion | REG_SZ (文字列値) | 2
-| ModifyPath | REG_SZ (文字列値) | python.exe %USERPROFILE%\\.homeworkChecker\\インストーラー.py
+| ModifyPath | REG_SZ (文字列値) | cmd /c "python.exe %USERPROFILE%\.homeworkChecker\インストーラー.py"
 | InstallLocation | REG_SZ (文字列値) | %USERPROFILE%\\.homeworkChecker
