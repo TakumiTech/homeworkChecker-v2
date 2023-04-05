@@ -29,8 +29,9 @@
 | キーの名前 | 種類 | データ (値) |
 |--|--|--|
 | DisplayName | REG_SZ (文字列値) | 宿題、出した? |
-| Publisher | REG_SZ (文字列値) | TakumiTech
+| DisplayIcon | REG_SZ (文字列値) | %USERPROFILE%\.homeworkChecker\icon.ico |
+| Publisher | REG_SZ (文字列値) | TakumiTech |
 | URLInfoAbout | REG_SZ (文字列値) | https://github.com/TakumiTech/homeworkChecker-v2 |
-| DisplayVersion | REG_SZ (文字列値) | 2
-| ModifyPath | REG_SZ (文字列値) | cmd /c "python.exe %USERPROFILE%\.homeworkChecker\インストーラー.py"
-| InstallLocation | REG_SZ (文字列値) | %USERPROFILE%\\.homeworkChecker
+| DisplayVersion | REG_SZ (文字列値) | 2 |
+| ModifyPath | REG_SZ (文字列値) | cmd /c "python.exe %USERPROFILE%\.homeworkChecker\インストーラー.py" |
+| InstallLocation | REG_SZ (文字列値) | %USERPROFILE%\\.homeworkChecker |
