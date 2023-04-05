@@ -329,7 +329,7 @@ def check(): #check if tkinter is installed
   try:
       global tk
       global messagebox
-      import tkinter as tk0
+      import tkinter as tk
       from tkinter import messagebox
       gui()
   except ModuleNotFoundError:
