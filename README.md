@@ -23,7 +23,7 @@
 
 **実行すると「Python」とだけ表示される場合は、設定アプリ→アプリ→アプリの詳細設定→アプリ実行エイリアス→アプリ インストーラー python.exe　をオフにしてください。**
 
-###　ちょっとおまけ (上級者向け)
+### ちょっとおまけ (上級者向け)
 どうしてもコントロールパネル・設定アプリのアプリ一覧に表示させたいのであれば、```HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\homeworkChecker```に以下のレジストリを追加してください。(homeworkCheckerキーも作成してください)
 
 | キーの名前 | 種類 | データ (値) |
