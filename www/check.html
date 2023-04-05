@@ -1,0 +1,32 @@
+<doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>先生・秘書係専用ページ</title>
+        <link rel="icon" href="/icon.png">
+    </head>
+    <body>
+        <a href="/"><img src="/logo.png" alt="ロゴ「宿題、出した?」"></a>
+        <h1>出した人の一覧</h1>
+        <p>出した人を見るには、パスワードが必要です。パスワードを入力してください。</p>
+        <div style="background-color: lightcoral;"><h3 id="message"></h3></div>
+        <form action="/cgi-bin/check.py" method="POST">
+            <input type="password" name="pw" placeholder="パスワード">
+            <input type="submit" value="これでOKだ!!! (送信)">
+        </form>
+        <div style="background-color: lightgoldenrodyellow;text-align: center;">
+            <h4>⚠注意</h4>
+            <p>セキュリティ上、2台以上同時に見ることはできません。(エラーが発生します｡)</p>
+        </div>
+        <a href="/"><button>戻る</button></a>
+        <script>
+            var params = (new URL(document.location)).searchParams;
+            error=params.get('error');
+            if (error==="passwordNone"){
+                document.getElementById("message").innerHTML="⚠️パスワードが入力されていません";
+            }else if (error==="passwordInvalid"){
+                document.getElementById("message").innerHTML="⚠️パスワードが違います";
+            }
+        </script>
+    </body>
+</html>

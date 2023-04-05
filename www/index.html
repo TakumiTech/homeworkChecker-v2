@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <title>宿題、出した?</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+    <link rel="stylesheet" as="style" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <style>
+  h1,h2,h3,h4,h5,h6,p,label{
+    font-family: 'Yomogi', cursive;
+  }
+  p{ font-size:20px; }
+  * {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  @media (prefers-color-scheme: dark) { /* dark mode*/
+    body{
+      background: #272727;
+      color: white;
+    }
+    #logo{
+      background-image: url("/logoDark.png");
+    }
+  }
+  body{
+    background: rgb(174,217,255);
+    background: linear-gradient(99deg, rgba(174,217,255,1) 0%, rgba(235,247,255,1) 100%);
+  }
+  </style></head>
+<!--body-->
+  <body>
+    <noscript>
+      <style>
+        #pop-up2:checked + .overlay2 {
+	        display: block;
+	        z-index: 9999;
+	        background-color: #00000070;
+	        position: fixed;
+	        width: 100%;
+	        height: 100vh;
+	        top: 0;
+	        left: 0;
+        }
+        .window2{
+	        position: fixed;
+	        top: 50%;
+	        left: 50%;
+          transform: translate(-50%, -50%);
+          background:lightyellow;
+        }
+        .overlay2 {
+	        display: none; /* xで消えるように */
+        }
+        #video{
+          display: none !important;
+        }
+      </style>
+      <input type="checkbox" id="pop-up2" checked style="display: none;">
+      <div class="overlay2">
+        <div class="window2">
+          <h2>お使いのブラウザでは利用できません</h2>
+          <p>お使いのブラウザはJavaScriptに対応していないかオフになっているため、顔認証やQRコードスキャンナーを利用できません。</p>
+          <p>最新版の<a href="microsoft-edge:http://localhost">Microsoft Edge</a>をの利用をお勧めします。</p>
+          <p><a href="https://www.microsoft.com/ja-jp/edge/download" target="_blank">Microsoft Edgeをダウンロード</a></p>
+          <p><a href="https://youtu.be/BovYk73Uwsg" target="_blank">Microsoft EdgeでJavaScriptを有効にする方法</a></p>
+          <label style="cursor:pointer;border:2px solid black; background-color: lightgray;" for="pop-up2">閉じる</label>
+        </div>
+      </div>
+    </noscript><!--end noscript-->
+    <img src="/logo.png" alt="ロゴ「宿題、出した?」" id="logo">
+        <div style="position:relative;width:640px;height:480px;margin-left: auto;margin-right: auto;" id="container">
+          <video id="video" style="position: relative;" muted autoplay width="640" height="480"></video>
+          <canvas id="facecanvas" style="position: absolute;top:0px;right:0px;" width="640" height="480"></canvas>
+          <iframe height="480" name="frame" style="position:absolute;border:none;">お使いのブラウザはiframeに対応していないため、送信ができません。</iframe>
+        </div>
+        <div id="sourceSelectPanel" style="display:none"> <!--wil show when cam is detected-->
+            <label for="sourceSelect">カメラ</label>
+            <select id="sourceSelect" style="max-width:400px"></select>
+          </div>
+          <form style="font-size:30px;" action="/cgi-bin/submit.py" id="form" method="POST" target="frame">
+            <label for="input">ID: </label><input required autofocus placeholder="手動入力もOK!" style="font-size:30px;" id="input" name="id" autocomplete="off" onblur="this.select()">
+            <input style="font-size:30px;cursor:pointer;" type="submit" value="GO!!!"> </form>
+          <hr><p><a href="check.html">【先生・秘書係専用】出した人を見る</a></p>
+          <canvas id="canvas2" style="display:none;"></canvas>
+    <!--below javascript etc-->
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+    <script src="/js/face-api.js"></script>
+    <script type="text/javascript"> 
+      window.addEventListener('load', function () {
+        console.log('%c ', `background-image: url("/icon.png");background-size: contain;background-position: center center;background-repeat: no-repeat;padding-right: 100px;padding-bottom: 121px;`);
+        console.log("%cこんなところまでついついチェックしてしまうアナタ!!\n僕の恥ずかしい (?) コンソールへようこそ。\n英文とエラーばかりのコンソールで申し訳ございません。\n\nコンソール読者(?)限定! Google検索の裏技です!!\nGoogle英語版で\"text adventure\"と検索し、コンソールで\"yes\"と入力するとゲームを遊べます。\n日本語版で検索すると出てこないので注意してください。\nhttps://www.google.com/search?q=text+adventure&hl=en\n\nそれでは。","font-family:sans-serif;font-size:17px;")
+        if(/MSIE/i.test(navigator.userAgent)) { //IE11 does not qualify
+            console.log("Detected unsupported browser: " + navigator.userAgent);
+            window.location="microsoft-edge:http://localhost/";
+        }
+
+        let selectedDeviceId;
+        const codeReader = new ZXing.BrowserQRCodeReader()
+        console.log('QR Code scanner open')
+        codeReader.getVideoInputDevices()
+          .then((videoInputDevices) => {
+            const sourceSelect = document.getElementById('sourceSelect')
+            selectedDeviceId = videoInputDevices[0].deviceId
+            if (videoInputDevices.length >= 1) {
+              videoInputDevices.forEach((element) => {
+                const sourceOption = document.createElement('option')
+                sourceOption.text = element.label
+                sourceOption.value = element.deviceId
+                sourceSelect.appendChild(sourceOption)
+              })
+  
+              sourceSelect.onchange = () => {
+                selectedDeviceId = sourceSelect.value;
+              };
+  
+              const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+              sourceSelectPanel.style.display = 'block'
+            }
+          
+          codeReader.decodeFromInputVideoDeviceContinuously(selectedDeviceId, 'video', (result, err) => {
+          if (result) {
+            // qr code decoded
+            console.log('Found QR code!', result)
+            document.getElementById("input").value=result.text
+            document.getElementById("form").submit()
+          }
+          if (err) {
+            // Excepted Exceptions:
+            //
+            //  - NotFoundException
+            //  - ChecksumException
+            //  - FormatException
+  
+            //if (err instanceof ZXing.NotFoundException) {
+            //  console.log('No QR code found...')
+            //}
+            if (err instanceof ZXing.ChecksumException) {
+              console.log('A code was found, but it\'s read value was not valid.')
+            }
+            if (err instanceof ZXing.FormatException) {
+              console.log('A code was found, but it was in a invalid format.')
+            }
+          }})
+  
+              console.log(`Started scanning with camera with id ${selectedDeviceId}`)
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      })
+      </script><script>
+      //below face-api
+      let image;
+      let canvas;
+      Promise.all([
+        faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+        faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+        faceapi.nets.ssdMobilenetv1.loadFromUri('/models'),
+        faceapi.nets.tinyFaceDetector.loadFromUri("/models")
+      ]).then(start)
+      async function look(){
+        //if (image) image.remove()
+        //if (canvas) canvas.remove()
+        //image = await faceapi.bufferToImage(convert())
+        //canvas = faceapi.createCanvasFromMedia(image)
+        const labeledFaceDescriptors = await loadLabeledImages()
+        const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+        //convert()
+        const canvas2=document.getElementById("canvas2")
+        const video=document.getElementById("video")
+        canvas2.setAttribute('width', video.width)
+        canvas2.setAttribute('height', video.height)
+        //canvas2.setAttribute('style','display:none;')
+        canvas2.getContext('2d').drawImage(video, 0, 0, video.width, video.height)
+        console.log("drawed image to canvas2")
+        //console.log(canvas2.toDataURL())
+        const displaySize = { width: canvas2.width, height: canvas2.height }
+        console.log("canvas2 width: "+canvas2.width+"\ncanvas2 height: "+canvas2.height)
+        //faceapi.matchDimensions(canvas2, displaySize)
+        const detections = await faceapi.detectAllFaces(canvas2,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptors()
+        console.log(detections)
+        console.log(detections.length)
+        const resizedDetections = faceapi.resizeResults(detections, displaySize)
+        console.log(resizedDetections)
+        const results = resizedDetections.map(d => faceMatcher.findBestMatch(d.descriptor))
+        console.log(results)
+        console.log("results in str is "+toString(results))
+        console.log("found "+results.length+" people")
+        results.forEach((result, i) => {
+          const box = resizedDetections[i].detection.box
+          const stringResult=result.label
+          const drawBox = new faceapi.draw.DrawBox(box, { label: stringResult })
+          console.log("found "+stringResult)
+          if (stringResult=="unknown"){
+            console.log("found person, but cannot detect who")
+          } else{
+            document.getElementById("input").value=stringResult
+            document.getElementById("form").submit()
+            document.getElementById("input").value=""
+          }
+          canvas=document.getElementById("facecanvas")
+          canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+          drawBox.draw(canvas)
+        })
+        if (results.length===0){
+          canvas=document.getElementById("facecanvas")
+          canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      async function start() {
+        const container = document.getElementById("container")
+        const labeledFaceDescriptors = await loadLabeledImages()
+        const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+        console.log("face-api.js loaded")
+      }
+
+      function loadLabeledImages() {
+        const labels = []
+        return Promise.all(
+          labels.map(async label => {
+            const descriptions = []
+            for (let i = 1; i <= 2; i++) {
+              const img = await faceapi.fetchImage(`/assets/${label}/${i}.jpg`)
+              const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+              descriptions.push(detections.descriptor)
+            }
+
+            return new faceapi.LabeledFaceDescriptors(label, descriptions)
+          })
+        )
+      }
+      console.log("made all functions with the error(s) above. Now setting interval")
+      console.log("interval set. ending script")
+      setInterval(look,3000)
+    </script>
+</body></html>
