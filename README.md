@@ -24,7 +24,7 @@
 
 宿題を出した人を確認するときの初期パスワードは「Homework」です。ログイン後に、変更できます。
 
-### トラブルシューティング
+## トラブルシューティング
 | 質問 | 解決策 |
 | ----- | ----- |
 | インストールしようとすると、```'git' は、内部コマンドまたは外部コマンド、操作可能なプログラムまたはバッチ ファイルとして認識されていません。```と表示される | gitをインストールしてください。 |
@@ -34,7 +34,7 @@
 | 宿題を出した人を確認したいのですが、パスワードが分かりません。 | 初期パスワードは「Homework」ですが、変更された可能性もあります。大文字・小文字・半角全角も区別します。 |
 | 宿題を出す・出した人を確認するのは、コマンドを実行していない端末でもできますか。 | はい。設定アプリからIPアドレスを確認し、同じWi-Fiに接続している端末からそのIPアドレスにアクセスしてください。読み込みが遅い場合、セキュリティをオフにしてみてください。 |
  
-### ちょっとおまけ (上級者向け)
+## ちょっとおまけ (上級者向け)
 どうしてもコントロールパネル・設定アプリのアプリ一覧に表示させたいのであれば、```HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Uninstall\homeworkChecker```に以下のレジストリを追加してください。(homeworkCheckerキーも作成してください)
 
 | キーの名前 | 種類 | データ (値) |
@@ -46,3 +46,7 @@
 | DisplayVersion | REG_SZ (文字列値) | 2 |
 | ModifyPath | REG_SZ (文字列値) | cmd /c "python.exe %USERPROFILE%\.homeworkChecker\インストーラー.py" |
 | InstallLocation | REG_SZ (文字列値) | %USERPROFILE%\\.homeworkChecker |
+
+## 使用API
+ - [face-api.js](https://github.com/justadudewhohacks/face-api.js)
+ - [ZXing](https://github.com/zxing-js/library)
