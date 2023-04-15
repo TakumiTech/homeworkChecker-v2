@@ -50,3 +50,4 @@
 ## 使用API
  - [face-api.js](https://github.com/justadudewhohacks/face-api.js)
  - [ZXing](https://github.com/zxing-js/library)
+ - [Python http.server (旧SimpleHTTPServer)](https://docs.python.org/ja/3/library/http.server.html)
