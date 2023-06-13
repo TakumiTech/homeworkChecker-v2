@@ -13,13 +13,20 @@
  - [Python 3](https://python.org/downloads/) (インストール時に「Add python.exe to PATH」にチェックをいれてください)
  - [Git](https://git-scm.com/download/win)
 
-以下のコマンドをコマンド プロンプトで実行してください。管理者権限は不要です。
+以下のリンクからインストーラー(exe)をダウンロードしてください。
+ - [64bit版](https://takumitech.github.io/homework-install-x64.exe)
+ - [32bit版](https://takumitech.github.io/homework-install-x86.exe)
+
+また、以下のコマンドをコマンド プロンプトで実行してインストールすることも可能です。管理者権限は不要です。
 
 ```git clone https://github.com/TakumiTech/homeworkChecker-v2.git %userprofile%/.homeworkChecker```
 
-実行するには、以下のコマンドを実行した後、ブラウザで```http://localhost/```にアクセスしてください。
+##実行方法
 
-```python -m http.server  80 --cgi -d %userprofile%\.homeworkchecker\www\```
+実行するには、以下のコマンドを実行した後、ブラウザで```http://localhost/```にアクセスしてください。
+%UserProfile%\.homeworkChecker\サーバーを立ち上げる.lnk からも実行できます。
+
+```python -m http.server 80 --cgi -d %userprofile%\.homeworkchecker\www\```
 
 
 宿題を出した人を確認するときの初期パスワードは「Homework」です。ログイン後に、変更できます。
