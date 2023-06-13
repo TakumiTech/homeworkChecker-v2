@@ -11,13 +11,12 @@
  - Windows 10 または 11
  - Macでは動作しません
  - [Python 3](https://python.org/downloads/) (インストール時に「Add python.exe to PATH」にチェックをいれてください)
- - [Git](https://git-scm.com/download/win)
 
 以下のリンクからインストーラー(exe)をダウンロードしてください。
  - [64bit版](https://takumitech.github.io/homework-install-x64.exe)
  - [32bit版](https://takumitech.github.io/homework-install-x86.exe)
 
-また、以下のコマンドをコマンド プロンプトで実行してインストールすることも可能です。管理者権限は不要です。
+また、以下のコマンドをコマンド プロンプトで実行してインストールすることも可能です。管理者権限は不要です。この場合、[Git](https://git-scm.com/download/win)を事前にインストールする必要があります。
 
 ```git clone https://github.com/TakumiTech/homeworkChecker-v2.git %userprofile%/.homeworkChecker```
 
