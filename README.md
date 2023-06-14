@@ -20,7 +20,7 @@
 
 ```git clone https://github.com/TakumiTech/homeworkChecker-v2.git %userprofile%/.homeworkChecker```
 
-##実行方法
+## 実行方法
 
 実行するには、以下のコマンドを実行した後、ブラウザで```http://localhost/```にアクセスしてください。
 %UserProfile%\.homeworkChecker\サーバーを立ち上げる.lnk からも実行できます。
