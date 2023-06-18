@@ -13,8 +13,8 @@
  - [Python 3](https://python.org/downloads/) (インストール時に「Add python.exe to PATH」にチェックをいれてください)
 
 以下のリンクからインストーラー(exe)をダウンロードしてください。警告が出るかもしてませんが、安全です。
- - [64bit版](https://takumitech.github.io/homework-install-x64.exe)
- - [32bit版](https://takumitech.github.io/homework-install-x86.exe)
+ - [64bit版](https://takumitech.github.io/homework-install-x64-signed.exe)
+ - [32bit版](https://takumitech.github.io/homework-install-x86-signed.exe)
 
 また、以下のコマンドをコマンド プロンプトで実行してインストールすることも可能です。管理者権限は不要です。この場合、[Git](https://git-scm.com/download/win)を事前にインストールする必要があります。
 
